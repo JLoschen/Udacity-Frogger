@@ -8,9 +8,9 @@ var laneSpeed = [100, 150, 200];
 var spriteDictionary = {
     boy:"images/char-boy.png",
     catGirl:"images/char-cat-girl.png",
-    hornGirl:"images/char-horn-girl.png",
-    pinkGirl:"images/char-pink-girl.png",
-    princess:"images/char-princess-girl.png",
+    "hornGirl":"images/char-horn-girl.png",
+    "pinkGirl":"images/char-pink-girl.png",
+    "princess":"images/char-princess-girl.png",
 };
 
 // Enemies our player must avoid
@@ -45,10 +45,6 @@ class Enemy{
     }
 }
 
-
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
 class Player {
     constructor(characterType){
         this.x = 200;
@@ -77,8 +73,6 @@ class Player {
             //if they won
             if(this.y < 50 && !this.inWater){
                 score++;
-//                var numKeys = document.getElementById("score");
-//                numKeys.innerHTML = score;
                 $('#score').html(score);
                 this.inWater = true;
                 
@@ -129,6 +123,15 @@ class Player {
         this.inWater = false;
     }
 }
+
+$(document).ready(function(){
+    $('#character-select').change(function(){
+        player.sprite =  spriteDictionary[$(this).val()];
+        
+        //unselect combobox so arrow keys don't changed selection
+        $(this).blur();
+    });
+});
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
