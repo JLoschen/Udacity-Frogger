@@ -3,7 +3,7 @@ var tileWidth = 101;
 var upMovement = -1 * tileHeight;
 var leftMovement = -1 * tileWidth;
 var score = 0;
-var lives = 10;
+var lives = 5;
 var laneSpeed = [100, 150, 200];
 var speedSlider;
 var spriteDictionary = {
@@ -79,8 +79,7 @@ class Player {
             
             //if they won
             if(this.y < 50 && !this.inWater){
-                score++;
-                $('#score').html(score);
+                incrementScore();
                 this.inWater = true;
                 
                 //using arrow function to lexically bind 'this'
@@ -92,22 +91,32 @@ class Player {
         }
         
         //check for collisions
-//        for(const enemy of allEnemies){
-//            const differenceX = Math.abs(this.x - enemy.x);
-//            const differenceY = Math.abs(this.y - enemy.y);
-//            if(differenceX < 70 && differenceY < 20){
-//                player.reset();
-//                lives--;
-//                $('#lives').html(lives);
-//            }
-//        }
+        for(const enemy of allEnemies){
+            const differenceX = Math.abs(this.x - enemy.x);
+            const differenceY = Math.abs(this.y - enemy.y);
+            if(differenceX < 70 && differenceY < 20){
+                player.reset();
+                lives--;
+                $('#lives').html(lives);
+                
+                if(lives === 0){
+                     swal({
+                        title: 'Game Over',
+                        text: 'Better Luck Next Time',
+                        type: 'error',
+                        confirmButtonText: 'Next Game'
+                    },function(){
+                        setupNewGame();    
+                    });    
+                }
+            }
+        }
         
         //check for gem collision
         const diffX = Math.abs(this.x - gem.x);
         const diffY = Math.abs(this.y - gem.y);
         if(diffX < 70 && diffY < 20){
-            score++;
-            $('#score').html(score);
+            incrementScore();
             gem = new Gem();
         }
         
@@ -115,9 +124,8 @@ class Player {
         const heartDiffX = Math.abs(this.x - heart.x);
         const heartDiffY = Math.abs(this.y - heart.y);
         if(heartDiffX < 70 && heartDiffY < 20 && heart.visible){
-            score++;
-            $('#score').html(score);
             //gem = new Gem();
+            //incrementScore();
             heart.selected();
         }
     }
@@ -148,6 +156,30 @@ class Player {
         this.y = 390;
         this.inWater = false;
     }
+}
+
+function incrementScore(){
+    score++;
+    $('#score').html(score);
+    if(score === 10){
+        swal({
+			title: 'You win!',
+			text: 'You got 10!',
+			type: 'success',
+			confirmButtonText: 'Next Game'
+		},function(){
+            setupNewGame();    
+        });    
+    }    
+}
+
+function setupNewGame(){
+    score = 0;
+    $('#score').html(score);
+    lives = 5;
+    $('#lives').html(lives);
+    player.reset();
+    allEnemies = [/*new Enemy(), new Enemy(),*/ new Enemy(1), new Enemy(2), new Enemy(3)];
 }
 
 const gemSprites = [ 'images/Gem Blue.png', 
@@ -190,7 +222,6 @@ class Heart{
         
         speedSlider.val(-50);
         updateSpeedModifier(-50);
-        //speedSlider.val(this.y);
         
         setTimeout(() => {
             speedSlider.val(50);
