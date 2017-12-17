@@ -3,6 +3,7 @@ var tileWidth = 101;
 var upMovement = -1 * tileHeight;
 var leftMovement = -1 * tileWidth;
 var score = 0;
+var lives = 10;
 var laneSpeed = [100, 150, 200];
 var spriteDictionary = {
     boy:"images/char-boy.png",
@@ -27,7 +28,6 @@ class Enemy{
         // The image/sprite for our enemies, this uses
         // a helper we've provided to easily load images
         this.sprite = 'images/enemy-bug.png';
-//        this.sprite = 'images/dot.PNG';
     }
     
     update(dt){
@@ -36,19 +36,12 @@ class Enemy{
         // all computers.
         this.x += (this.speed * dt);
         if(this.x > 500){
-            this.x = - 10;
+            this.x = -10;
         }
     }
     
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-        ctx.draw
-    }
-    
-    isInHitBox(player){
-        if(Math.abs(player.x - this.x) < 70 && Math.abs(player.y - this.y) < 20){
-            player.reset();
-        }
     }
 }
 
@@ -84,8 +77,9 @@ class Player {
             //if they won
             if(this.y < 50 && !this.inWater){
                 score++;
-                var numKeys = document.getElementById("score");
-                numKeys.innerHTML = score;
+//                var numKeys = document.getElementById("score");
+//                numKeys.innerHTML = score;
+                $('#score').html(score);
                 this.inWater = true;
                 
                 //using arrow function to lexically bind 'this'
@@ -102,6 +96,8 @@ class Player {
             var differenceY = Math.abs(this.y - enemy.y);
             if(differenceX < 70 && differenceY < 20){
                 player.reset();
+                lives--;
+                $('#lives').html(lives);
             }
         }
     }
