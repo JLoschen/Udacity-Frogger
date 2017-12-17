@@ -5,6 +5,7 @@ var leftMovement = -1 * tileWidth;
 var score = 0;
 var lives = 10;
 var laneSpeed = [100, 150, 200];
+var speedSlider;
 var spriteDictionary = {
     boy:"images/char-boy.png",
     catGirl:"images/char-cat-girl.png",
@@ -19,7 +20,8 @@ class Enemy{
         // Variables applied to each of our instances go here,
         // we've provided one for you to get started
         //this.speed = Math.random() * 200 + 50;
-        this.speed = laneSpeed[lane - 1];
+        this.speedBase = laneSpeed[lane-1];
+        this.speed = this.speedBase;
 
         this.x = 0;
         
@@ -38,6 +40,10 @@ class Enemy{
         if(this.x > 500){
             this.x = -10;
         }
+    }
+    
+    updateSpeed(speedModifier){
+        this.speed = this.speedBase + speedModifier;
     }
     
     render(){
@@ -70,6 +76,7 @@ class Player {
         if(this.Ymovement !== 0){
             this.y += this.Ymovement;
             this.Ymovement = 0;
+            
             //if they won
             if(this.y < 50 && !this.inWater){
                 score++;
@@ -80,19 +87,38 @@ class Player {
                 //https://stackoverflow.com/questions/2130241/pass-correct-this-context-to-settimeout-callback
                 setTimeout(() => {
                     this.reset();
-                } , 600);
+                } , 500);
             }
         }
         
         //check for collisions
-        for(const enemy of allEnemies){
-            var differenceX = Math.abs(this.x - enemy.x);
-            var differenceY = Math.abs(this.y - enemy.y);
-            if(differenceX < 70 && differenceY < 20){
-                player.reset();
-                lives--;
-                $('#lives').html(lives);
-            }
+//        for(const enemy of allEnemies){
+//            const differenceX = Math.abs(this.x - enemy.x);
+//            const differenceY = Math.abs(this.y - enemy.y);
+//            if(differenceX < 70 && differenceY < 20){
+//                player.reset();
+//                lives--;
+//                $('#lives').html(lives);
+//            }
+//        }
+        
+        //check for gem collision
+        const diffX = Math.abs(this.x - gem.x);
+        const diffY = Math.abs(this.y - gem.y);
+        if(diffX < 70 && diffY < 20){
+            score++;
+            $('#score').html(score);
+            gem = new Gem();
+        }
+        
+        //render heart
+        const heartDiffX = Math.abs(this.x - heart.x);
+        const heartDiffY = Math.abs(this.y - heart.y);
+        if(heartDiffX < 70 && heartDiffY < 20 && heart.visible){
+            score++;
+            $('#score').html(score);
+            //gem = new Gem();
+            heart.selected();
         }
     }
     
@@ -124,12 +150,84 @@ class Player {
     }
 }
 
+const gemSprites = [ 'images/Gem Blue.png', 
+                     'images/Gem Green.png',
+                     'images/Gem Orange.png'] ;
+
+class Gem{
+    constructor(){
+        const column = Math.floor(Math.random() * 5);
+        this.x = column * tileWidth;
+        
+        const row = Math.floor(Math.random() * 3) + 1;
+        this.y = row * tileHeight - 25;
+        
+        this.sprite = gemSprites[0];
+    }
+    
+    render(){
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+}
+
+class Heart{
+    constructor(){
+        const column = Math.floor(Math.random() * 5);
+        this.x = column * tileWidth;
+        
+        const row = Math.floor(Math.random() * 3) + 1;
+        this.y = row * tileHeight - 9;
+        
+        //this.sprite = 'images/Heart.png';
+        this.sprite = 'images/Star.png';
+        this.visible = true;
+    }
+    
+    selected(){
+        this.sprite = 'images/Selector.png';
+        this.visible = false;
+        this.y -= 28;
+        
+        speedSlider.val(-50);
+        updateSpeedModifier(-50);
+        //speedSlider.val(this.y);
+        
+        setTimeout(() => {
+            speedSlider.val(50);
+            updateSpeedModifier(50);    
+        },3000);
+        
+        setTimeout(() => {
+                    heart = new Heart();
+                } , 400);
+    }
+    
+    render(){
+        //if(this.visible)
+            ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+}
+
+function updateSpeedModifier(modifier){
+    for(const enemy of allEnemies){
+        enemy.updateSpeed(modifier);
+    }
+}
+
 $(document).ready(function(){
     $('#character-select').change(function(){
         player.sprite =  spriteDictionary[$(this).val()];
         
         //unselect combobox so arrow keys don't changed selection
         $(this).blur();
+    });
+    
+    speedSlider = $('#speed-slider');
+    speedSlider.on('input',function(){
+        console.log('speed input changed');
+       let speedModifier = parseInt($(this).val());
+        
+        updateSpeedModifier(speedModifier);
     });
 });
 
@@ -140,15 +238,20 @@ var allEnemies = [/*new Enemy(), new Enemy(),*/ new Enemy(1), new Enemy(2), new 
 
 var player = new Player('boy');
 
+var gem = new Gem();
+
+var heart = new Heart();
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
+    speedSlider.blur();
     var allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
         40: 'down'
-    };
+    };    
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
