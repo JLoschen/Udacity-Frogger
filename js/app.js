@@ -59,23 +59,56 @@ class Player {
         this.Xmovement = 0;
         this.inWater = false;
         this.isHit = false;
+        this.isGettingStar = false;
         this.halfWidth = 20;
         this.halfHeight = 20;
         this.sprite = spriteDictionary[characterType];
+        this.starComingIn = false;
+        this.fallingStar = null;
+        this.hasSpeedBoost = false;
     }
     
     render(){
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        
+        if(this.hasSpeedBoost){
+            ctx.drawImage(Resources.get('images/Selector.png'), this.x, this.y - 20);
+        }
+        
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y );
+        
         if(this.inWater)
             ctx.drawImage(Resources.get('images/water-splash2.png'), this.x, this.y - 15);
         
         if(this.isHit)
             ctx.drawImage(Resources.get('images/blood-splash2.png'), this.x, this.y - 15);
+        
+        if(this.fallingStar !== null){
+            this.fallingStar.render();
+        }
+        
+        
     }
     
-    update(){
+    update(dt){
+        if(this.fallingStar != null){
+            this.fallingStar.update(dt);
+            if(this.fallingStar.currentY > this.y -20 ){
+                this.fallingStar = null;
+                heart.visible = false;
+                this.hasSpeedBoost = true;
+                speedSlider.val(-60);
+                updateSpeedModifier(-60);
+
+                setTimeout(() => {
+                    speedSlider.val(60);
+                    updateSpeedModifier(60);    
+                    this.hasSpeedBoost = false;
+                },4000);
+            }
+        }
+        
         if(this.Xmovement !== 0){
-            this.x += this.Xmovement;
+            this.x += this.Xmovement; 
             this.Xmovement = 0;
         }
         
@@ -102,25 +135,25 @@ class Player {
             const differenceY = Math.abs(this.y - enemy.y);
             if(differenceX < 70 && differenceY < 20 && !this.isHit){
                 
-                lives--;
-                $('#lives').html(lives);
-                this.isHit = true;
-                
-                if(lives === 0){
-                     swal({
-                        title: 'Game Over',
-                        text: 'Better Luck Next Time',
-                        type: 'error',
-                        confirmButtonText: 'Next Game'
-                    },function(){
-                        setupNewGame();    
-                    });    
-                }else{
-                    setTimeout(() =>{
-                    //player.reset();        
-                        this.reset();
-                    },500);
-                }
+//                lives--;
+//                $('#lives').html(lives); 
+//                this.isHit = true;
+//                
+//                if(lives === 0){
+//                     swal({
+//                        title: 'Game Over',
+//                        text: 'Better Luck Next Time',
+//                        type: 'error',
+//                        confirmButtonText: 'Next Game'
+//                    },function(){
+//                        setupNewGame();    
+//                    });    
+//                }else{
+//                    setTimeout(() =>{
+//                    //player.reset();        
+//                        this.reset();
+//                    },500);
+//                }
             }
         }
         
@@ -133,12 +166,15 @@ class Player {
         }
         
         //render heart
-        const heartDiffX = Math.abs(this.x - heart.x);
-        const heartDiffY = Math.abs(this.y - heart.y);
-        if(heartDiffX < 70 && heartDiffY < 20 && heart.visible){
-            //gem = new Gem();
-            heart.selected();
+        if(heart.visible){
+            const heartDiffX = Math.abs(this.x - heart.x);
+            const heartDiffY = Math.abs(this.y - heart.y);
+            if(heartDiffX < 70 && heartDiffY < 20 && heart.visible && this.fallingStar === null){
+                heart.visible = false;
+                this.fallingStar = new FallingStar(this.x, this.y);
+            }    
         }
+        
     }
     
     handleInput(direction){
@@ -167,6 +203,10 @@ class Player {
         this.y = 390;
         this.inWater = false;
         this.isHit = false;
+        this.hasSpeedBoost = false;
+        heart = new Heart();
+        speedSlider.val(60);
+        updateSpeedModifier(60);
     }
 }
 
@@ -192,11 +232,12 @@ function setupNewGame(){
     $('#lives').html(lives);
     player.reset();
     allEnemies = [/*new Enemy(), new Enemy(),*/ new Enemy(1), new Enemy(2), new Enemy(3)];
+    heart = new Heart();
 }
 
 const gemSprites = [ 'images/Gem Blue.png', 
                      'images/Gem Green.png',
-                     'images/Gem Orange.png'] ;
+                     'images/Gem Orange.png'];
 
 class Gem{
     constructor(){
@@ -222,32 +263,32 @@ class Heart{
         const row = Math.floor(Math.random() * 3) + 1;
         this.y = row * tileHeight - 9;
         
-        //this.sprite = 'images/Heart.png';
         this.sprite = 'images/Star.png';
         this.visible = true;
     }
     
-    selected(){
-        this.sprite = 'images/Selector.png';
-        this.visible = false;
-        this.y -= 28;
-        
-        speedSlider.val(-50);
-        updateSpeedModifier(-50);
-        
-        setTimeout(() => {
-            speedSlider.val(50);
-            updateSpeedModifier(50);    
-        },3000);
-        
-        setTimeout(() => {
-                    heart = new Heart();
-                } , 400);
+    render(){
+        if(this.visible)
+            ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+}
+
+class FallingStar{
+    constructor(x,y){
+        this.timeToFall = 4000;//in milliseconds so 4 seconds
+        this.landingX = x;
+        this.landingY = y;
+        this.currentY = this.landingY - 250;
+        this.speed = 400;//how fast it falls
+    }
+    
+    //multiply speed by dt so falls at steady rate
+    update(dt){
+        this.currentY += (this.speed * dt);
     }
     
     render(){
-        //if(this.visible)
-            ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+         ctx.drawImage(Resources.get('images/Selector.png'), this.landingX, this.currentY);
     }
 }
 
