@@ -6,6 +6,9 @@ var score = 0;
 var lives = 5;
 var laneSpeed = [100, 125, 150, 175, 200, 225];
 var speedSlider;
+var ouchSound = new Audio();
+var splashSound = new Audio();
+var marioStarSound = new Audio();
 var spriteDictionary = {
     boy:"images/char-boy.png",
     catGirl:"images/char-cat-girl.png",
@@ -102,7 +105,10 @@ class Player {
                     speedSlider.val(60);
                     updateSpeedModifier(60);    
                     this.hasSpeedBoost = false;
-                },4000);
+                    //marioStarSound.stop();
+                    marioStarSound.pause();
+                    marioStarSound.currentTime = 0;
+                },5000);
             }
         }
         
@@ -119,7 +125,7 @@ class Player {
             if(this.y < 50 && !this.inWater){
                 incrementScore();
                 this.inWater = true;
-                
+                splashSound.play();
                 //using arrow function to lexically bind 'this'
                 //https://stackoverflow.com/questions/2130241/pass-correct-this-context-to-settimeout-callback
                 setTimeout(() => {
@@ -134,25 +140,25 @@ class Player {
             const differenceY = Math.abs(this.y - enemy.y);
             if(differenceX < 70 && differenceY < 20 && !this.isHit){
                 
-//                lives--;
-//                $('#lives').html(lives); 
-//                this.isHit = true;
-//                
-//                if(lives === 0){
-//                     swal({
-//                        title: 'Game Over',
-//                        text: 'Better Luck Next Time',
-//                        type: 'error',
-//                        confirmButtonText: 'Next Game'
-//                    },function(){
-//                        setupNewGame();    
-//                    });    
-//                }else{
-//                    setTimeout(() =>{
-//                    //player.reset();        
-//                        this.reset();
-//                    },500);
-//                }
+                lives--;
+                $('#lives').html(lives); 
+                this.isHit = true;
+                ouchSound.play();
+                
+                if(lives === 0){
+                     swal({
+                        title: 'Game Over',
+                        text: 'Better Luck Next Time',
+                        type: 'error',
+                        confirmButtonText: 'Next Game'
+                    },function(){
+                        setupNewGame();    
+                    });    
+                }else{
+                    setTimeout(() =>{
+                        this.reset();
+                    },500);
+                }
             }
         }
         
@@ -170,6 +176,7 @@ class Player {
             const heartDiffY = Math.abs(this.y - heart.y);
             if(heartDiffX < 70 && heartDiffY < 20 && heart.visible && this.fallingStar === null){
                 heart.visible = false;
+                marioStarSound.play();
                 this.fallingStar = new FallingStar(this.x, this.y);
             }    
         }
@@ -203,6 +210,8 @@ class Player {
         this.inWater = false;
         this.isHit = false;
         this.hasSpeedBoost = false;
+        marioStarSound.pause();
+        marioStarSound.currentTime = 0;
         heart = new Heart();
         speedSlider.val(60);
         updateSpeedModifier(60);
@@ -306,10 +315,12 @@ $(document).ready(function(){
     });
     
     speedSlider = $('#speed-slider');
+    //ouchSound.src = "sounds/ouch.mp3";
+    ouchSound.src = "sounds/ouch2.wav";
+    splashSound.src = "sounds/splash.wav";
+    marioStarSound.src = "sounds/marioStar.mp3";
     speedSlider.on('input',function(){
-        console.log('speed input changed');
-       let speedModifier = parseInt($(this).val());
-        
+        let speedModifier = parseInt($(this).val());
         updateSpeedModifier(speedModifier);
     });
 });
