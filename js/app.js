@@ -58,6 +58,7 @@ class Player {
         this.Ymovement = 0;
         this.Xmovement = 0;
         this.inWater = false;
+        this.isHit = false;
         this.halfWidth = 20;
         this.halfHeight = 20;
         this.sprite = spriteDictionary[characterType];
@@ -65,6 +66,11 @@ class Player {
     
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        if(this.inWater)
+            ctx.drawImage(Resources.get('images/water-splash2.png'), this.x, this.y - 15);
+        
+        if(this.isHit)
+            ctx.drawImage(Resources.get('images/blood-splash2.png'), this.x, this.y - 15);
     }
     
     update(){
@@ -94,10 +100,11 @@ class Player {
         for(const enemy of allEnemies){
             const differenceX = Math.abs(this.x - enemy.x);
             const differenceY = Math.abs(this.y - enemy.y);
-            if(differenceX < 70 && differenceY < 20){
-                player.reset();
+            if(differenceX < 70 && differenceY < 20 && !this.isHit){
+                
                 lives--;
                 $('#lives').html(lives);
+                this.isHit = true;
                 
                 if(lives === 0){
                      swal({
@@ -108,6 +115,11 @@ class Player {
                     },function(){
                         setupNewGame();    
                     });    
+                }else{
+                    setTimeout(() =>{
+                    //player.reset();        
+                        this.reset();
+                    },500);
                 }
             }
         }
@@ -125,7 +137,6 @@ class Player {
         const heartDiffY = Math.abs(this.y - heart.y);
         if(heartDiffX < 70 && heartDiffY < 20 && heart.visible){
             //gem = new Gem();
-            //incrementScore();
             heart.selected();
         }
     }
@@ -155,6 +166,7 @@ class Player {
         this.x = 200;
         this.y = 390;
         this.inWater = false;
+        this.isHit = false;
     }
 }
 
