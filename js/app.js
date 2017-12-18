@@ -10,6 +10,7 @@ var speedSlider;
 var ouchSound = new Audio();
 var splashSound = new Audio();
 var marioStarSound = new Audio();
+var shouldPlaySounds = true;
 var spriteDictionary = {
     boy:"images/char-boy.png",
     catGirl:"images/char-cat-girl.png",
@@ -124,7 +125,8 @@ class Player {
             if(this.y < 50 && !this.inWater){
                 incrementScore();
                 this.inWater = true;
-                splashSound.play();
+                if(shouldPlaySounds)
+                    splashSound.play();
                 //using arrow function to lexically bind 'this'
                 //https://stackoverflow.com/questions/2130241/pass-correct-this-context-to-settimeout-callback
                 setTimeout(() => {
@@ -142,7 +144,8 @@ class Player {
                 lives--;
                 $('#lives').html(lives); 
                 this.isHit = true;
-                ouchSound.play();
+                if(shouldPlaySounds)
+                    ouchSound.play();
                 
                 if(lives === 0){
                      swal({
@@ -175,7 +178,8 @@ class Player {
             const heartDiffY = Math.abs(this.y - heart.y);
             if(heartDiffX < 70 && heartDiffY < 20 && heart.visible && this.fallingStar === null){
                 heart.visible = false;
-                marioStarSound.play();
+                if(shouldPlaySounds)
+                    marioStarSound.play();
                 this.fallingStar = new FallingStar(this.x, this.y);
             }    
         }
@@ -324,6 +328,20 @@ $(document).ready(function(){
     
     $("canvas").wrap( "<div class='new'></div>" );
     $(".new").append("<div id='box'></div>");
+    
+    //toggle music listener
+    $('.btnRound').click(function(){
+        var element = $('.fa');//only font awesome btn is the sound toggle
+        if(element.hasClass('fa-volume-off')){
+            element.removeClass('fa-volume-off');
+            element.addClass('fa-volume-up');
+            shouldPlaySounds = true;
+        }else{
+            element.removeClass('fa-volume-up');
+            element.addClass('fa-volume-off');
+            shouldPlaySounds = false;
+        }
+    });
 });
 
 // Now instantiate your objects.
