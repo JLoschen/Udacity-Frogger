@@ -1,10 +1,10 @@
-var tileHeight = 81;
+var tileHeight = 82;
 var tileWidth = 101;
 var upMovement = -1 * tileHeight;
 var leftMovement = -1 * tileWidth;
 var score = 0;
 var lives = 5;
-var laneSpeed = [100, 150, 200];
+var laneSpeed = [100, 125, 150, 175, 200, 225];
 var speedSlider;
 var spriteDictionary = {
     boy:"images/char-boy.png",
@@ -22,7 +22,6 @@ class Enemy{
         //this.speed = Math.random() * 200 + 50;
         this.speedBase = laneSpeed[lane-1];
         this.speed = this.speedBase;
-
         this.x = 0;
         
         //const lane = Math.floor(Math.random() * 3) + 1;
@@ -37,7 +36,7 @@ class Enemy{
         // which will ensure the game runs at the same speed for
         // all computers.
         this.x += (this.speed * dt);
-        if(this.x > 500){
+        if(this.x > 750){
             this.x = -10;
         }
     }
@@ -53,8 +52,8 @@ class Enemy{
 
 class Player {
     constructor(characterType){
-        this.x = 200;
-        this.y = 390;
+        this.x = 303;
+        this.y = 560;
         this.Ymovement = 0;
         this.Xmovement = 0;
         this.inWater = false;
@@ -188,19 +187,19 @@ class Player {
                     this.Ymovement = upMovement;
                 break;
             case 'right':
-                if(this.x < 400) 
+                if(this.x < 640) 
                     this.Xmovement = tileWidth;
                 break;
             case 'down':
-                if(this.y < 350)
+                if(this.y < 555)
                     this.Ymovement = tileHeight;
                 break;
         }
     }
     
     reset(){
-        this.x = 200;
-        this.y = 390;
+        this.x = 303;
+        this.y = 560;
         this.inWater = false;
         this.isHit = false;
         this.hasSpeedBoost = false;
@@ -231,7 +230,7 @@ function setupNewGame(){
     lives = 5;
     $('#lives').html(lives);
     player.reset();
-    allEnemies = [/*new Enemy(), new Enemy(),*/ new Enemy(1), new Enemy(2), new Enemy(3)];
+    allEnemies = [new Enemy(1), new Enemy(2), new Enemy(3), new Enemy(4), new Enemy(5), new Enemy(6)];
     heart = new Heart();
 }
 
@@ -257,10 +256,10 @@ class Gem{
 
 class Heart{
     constructor(){
-        const column = Math.floor(Math.random() * 5);
+        const column = Math.floor(Math.random() * 8);
         this.x = column * tileWidth;
         
-        const row = Math.floor(Math.random() * 3) + 1;
+        const row = Math.floor(Math.random() * 4) + 2;
         this.y = row * tileHeight - 9;
         
         this.sprite = 'images/Star.png';
@@ -318,7 +317,7 @@ $(document).ready(function(){
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var allEnemies = [/*new Enemy(), new Enemy(),*/ new Enemy(1), new Enemy(2), new Enemy(3)];
+var allEnemies = [new Enemy(1), new Enemy(2), new Enemy(3), new Enemy(4), new Enemy(5), new Enemy(6)];
 
 var player = new Player('boy');
 
