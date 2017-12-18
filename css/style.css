@@ -5,3 +5,23 @@ body {
 #speed-slider{
     width:600px;
 }
+
+#box{
+    width:75px;
+    height:0px;
+    background:yellow;
+    display:inline-block;
+    margin:0px 0px 0px 10px;
+}
+.starTimer{
+    animation: barShrink 5s linear 0s 1;
+}
+
+@keyframes barShrink {
+	0% {
+		height: 700px;
+	}
+	100% {
+		height: 0px;
+	}
+}

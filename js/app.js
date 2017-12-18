@@ -4,7 +4,8 @@ var upMovement = -1 * tileHeight;
 var leftMovement = -1 * tileWidth;
 var score = 0;
 var lives = 5;
-var laneSpeed = [100, 125, 150, 175, 200, 225];
+//var laneSpeed = [100, 125, 150, 175, 200, 225];
+var laneSpeed = [225, 200, 175, 150, 125, 100];
 var speedSlider;
 var ouchSound = new Audio();
 var splashSound = new Audio();
@@ -87,8 +88,6 @@ class Player {
         if(this.fallingStar !== null){
             this.fallingStar.render();
         }
-        
-        
     }
     
     update(dt){
@@ -100,14 +99,14 @@ class Player {
                 this.hasSpeedBoost = true;
                 speedSlider.val(-60);
                 updateSpeedModifier(-60);
-
+                $('#box').toggleClass('starTimer');
                 setTimeout(() => {
                     speedSlider.val(60);
                     updateSpeedModifier(60);    
                     this.hasSpeedBoost = false;
-                    //marioStarSound.stop();
                     marioStarSound.pause();
                     marioStarSound.currentTime = 0;
+                    $('#box').removeClass('starTimer');
                 },5000);
             }
         }
@@ -180,7 +179,6 @@ class Player {
                 this.fallingStar = new FallingStar(this.x, this.y);
             }    
         }
-        
     }
     
     handleInput(direction){
@@ -215,6 +213,7 @@ class Player {
         heart = new Heart();
         speedSlider.val(60);
         updateSpeedModifier(60);
+        $('#box').removeClass('starTimer');
     }
 }
 
@@ -315,7 +314,6 @@ $(document).ready(function(){
     });
     
     speedSlider = $('#speed-slider');
-    //ouchSound.src = "sounds/ouch.mp3";
     ouchSound.src = "sounds/ouch2.wav";
     splashSound.src = "sounds/splash.wav";
     marioStarSound.src = "sounds/marioStar.mp3";
@@ -323,6 +321,9 @@ $(document).ready(function(){
         let speedModifier = parseInt($(this).val());
         updateSpeedModifier(speedModifier);
     });
+    
+    $("canvas").wrap( "<div class='new'></div>" );
+    $(".new").append("<div id='box'></div>");
 });
 
 // Now instantiate your objects.
