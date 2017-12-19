@@ -10,6 +10,7 @@ var speedSlider;
 var ouchSound = new Audio();
 var splashSound = new Audio();
 var marioStarSound = new Audio();
+var heartSound = new Audio();
 var shouldPlaySounds = true;
 var spriteDictionary = {
     boy:"images/char-boy.png",
@@ -84,7 +85,8 @@ class Player {
             ctx.drawImage(Resources.get('images/water-splash2.png'), this.x, this.y - 15);
         
         if(this.isHit)
-            ctx.drawImage(Resources.get('images/blood-splash2.png'), this.x, this.y - 15);
+            //ctx.drawImage(Resources.get('images/blood-splash2.png'), this.x, this.y - 15);
+            ctx.drawImage(Resources.get('images/blast.png'), this.x + 5, this.y +40);
         
         if(this.fallingStar !== null){
             this.fallingStar.render();
@@ -96,7 +98,7 @@ class Player {
             this.fallingStar.update(dt);
             if(this.fallingStar.currentY > this.y -20 ){
                 this.fallingStar = null;
-                heart.visible = false;
+                star.visible = false;
                 this.hasSpeedBoost = true;
                 speedSlider.val(-60);
                 updateSpeedModifier(-60);
@@ -178,6 +180,17 @@ class Player {
             const heartDiffY = Math.abs(this.y - heart.y);
             if(heartDiffX < 70 && heartDiffY < 20 && heart.visible && this.fallingStar === null){
                 heart.visible = false;
+                heartSound.play();
+                lives++;
+                $('#lives').html(lives);
+            }    
+        }
+        
+        if(star.visible){
+            const starDiffX = Math.abs(this.x - star.x);
+            const starDiffY = Math.abs(this.y - star.y);
+            if(starDiffX < 70 && starDiffY < 20 && star.visible && this.fallingStar === null){
+                star.visible = false;
                 if(shouldPlaySounds)
                     marioStarSound.play();
                 this.fallingStar = new FallingStar(this.x, this.y);
@@ -215,6 +228,7 @@ class Player {
         marioStarSound.pause();
         marioStarSound.currentTime = 0;
         heart = new Heart();
+        star = new Star();
         speedSlider.val(60);
         updateSpeedModifier(60);
         $('#box').removeClass('starTimer');
@@ -272,6 +286,24 @@ class Heart{
         this.x = column * tileWidth;
         
         const row = Math.floor(Math.random() * 4) + 2;
+        this.y = row * tileHeight - 15;
+        
+        this.sprite = 'images/Heart.png';
+        this.visible = true;
+    }
+    
+    render(){
+        if(this.visible)
+            ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+}
+
+class Star{
+    constructor(){
+        const column = Math.floor(Math.random() * 8);
+        this.x = column * tileWidth;
+        
+        const row = Math.floor(Math.random() * 4) + 2;
         this.y = row * tileHeight - 9;
         
         this.sprite = 'images/Star.png';
@@ -283,6 +315,8 @@ class Heart{
             ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 }
+
+
 
 class FallingStar{
     constructor(x,y){
@@ -321,6 +355,8 @@ $(document).ready(function(){
     ouchSound.src = "sounds/ouch2.wav";
     splashSound.src = "sounds/splash.wav";
     marioStarSound.src = "sounds/marioStar.mp3";
+    heartSound.src = "sounds/magic1.wav";
+    
     speedSlider.on('input',function(){
         let speedModifier = parseInt($(this).val());
         updateSpeedModifier(speedModifier);
@@ -342,6 +378,8 @@ $(document).ready(function(){
             shouldPlaySounds = false;
         }
     });
+    
+    
 });
 
 // Now instantiate your objects.
@@ -354,6 +392,8 @@ var player = new Player('boy');
 var gem = new Gem();
 
 var heart = new Heart();
+
+var star = new Star();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.

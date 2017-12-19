@@ -163,6 +163,7 @@ var Engine = (function(global) {
         //gem.render();
         player.render();
         heart.render();
+        star.render();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -195,7 +196,7 @@ var Engine = (function(global) {
         'images/Selector.png',
         'images/Star.png',
         'images/water-splash2.png',
-        'images/blood-splash2.png'
+        'images/blast.png'
     ]);
     Resources.onReady(init);
 
