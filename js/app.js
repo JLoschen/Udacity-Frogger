@@ -379,6 +379,11 @@ $(document).ready(function(){
         }
     });
     
+    $(".crop").click(function(){
+        $(".selected").removeClass('selected');
+        $(this).addClass('selected');
+        player.sprite = $(this).children("img").attr('src');
+    });
     
 });
 

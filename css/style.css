@@ -26,6 +26,26 @@ body {
 	}
 }
 
+#left{
+    float:left;
+    background:red;
+}
+
+#right{
+    float:right;
+/*    background:blue;    */
+}
+
+.crop{
+/*    background:pink;*/
+}
+
+#main{
+    width:30%;
+    float:left;
+    background:green;
+}
+
 .btnRound {
     display:inline-block;
     width:50px;
@@ -37,4 +57,30 @@ body {
     border-radius:25px;
     background:black;
     cursor:pointer;
+}
+
+
+
+.crop {
+    width:100px;
+    height: 30%;
+    overflow: hidden;
+    border-radius: 100%;
+    background:clear;
+    cursor:pointer;
+}
+
+ img {
+  height: 100%;
+  margin-top: -39px;
+  margin-bottom: -10px;
+  float: left;
+}
+
+.crop:hover{
+    background:lightblue;
+}
+
+ .selected img{
+    background:blue;
 }
