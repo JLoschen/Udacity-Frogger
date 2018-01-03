@@ -18,12 +18,13 @@
             <h2>Game Rules</h2>
             <table>
                 <tr>
-                    <td><img src="images/arrows3.png" alt="Arrows"></td>
+<!--                    class="small"-->
+                    <td ><img class="arrows"  src="images/arrows3.png" alt="Arrows"></td>
                     <td>move player</td>
                 </tr>
                 <tr>
                     <td class="small"><img src="images/water-block.png" alt="Water block"></td>
-                    <td>reach the water <br>(20 pts and continue)</td>
+                    <td>reach the water <br>(1 point and continue)</td>
                 </tr>
                 <tr>
                     <td class="small"><img src="images/grass-block.png" alt="Grass block"></td>
@@ -46,24 +47,24 @@
                 
                 <tr>
                     <td class="small"><img id="bar" src="images/YellowBar.png" alt="Selector" ></td>
-                    <td>Time remaining on time slow</td>
+                    <td>Time remaining on<br> time slow down</td>
                 </tr>
             </table>
         </aside>
         
         <div id="main">
+             <section>
+            <div class="score-board">Lives:<span id="lives">5</span></div>
+            <div class="score-board">Score:<span id="score">0</span></div>
+            <div class="btnRound">
+                <a aria-hidden="true" class="fa fa-volume-up"></a>
+            </div>
+            </section>
             <div id="game">
                 <script src="js/resources.js"></script>
                 <script src="js/app.js"></script>
                 <script src="js/engine.js"></script>
             </div>
-            <section>
-            <div>Lives:<span id="lives">5</span></div>
-            <div>Score:<span id="score">0</span></div>
-            <div class="btnRound">
-                <a aria-hidden="true" class="fa fa-volume-up"></a>
-            </div>
-            </section>
         </div>
         
         <aside id="right">

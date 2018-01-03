@@ -28,7 +28,9 @@ var Engine = (function(global) {
     
     canvas.height = 756;
     
-    doc.body.appendChild(canvas);
+    //doc.body.appendChild(canvas);
+    doc.getElementById("game").appendChild(canvas);
+
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.

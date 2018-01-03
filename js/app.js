@@ -356,6 +356,7 @@ $(document).ready(function(){
         updateSpeedModifier(speedModifier);
     });
     
+    //not sure what these were here for
     $("canvas").wrap( "<div class='new'></div>" );
     $(".new").append("<div id='box'></div>");
     

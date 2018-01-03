@@ -33,18 +33,16 @@ body {
 
 #right{
     float:right;
-/*    background:blue;    */
-}
-
-.crop{
-/*    background:pink;*/
 }
 
 #main{
-    width:30%;
     float:left;
-    background:green;
-/*    display:inline-block;*/
+}
+
+.score-board{
+    font-size:xx-large;
+    margin:0 20px;
+    display:inline-block;
 }
 
 .btnRound {
@@ -85,15 +83,41 @@ body {
     background:blue;
 }
 
+.arrows{
+    width:60px;
+    height:60px;
+}
+
 /*left aside*/
+/*
 #left img{
     height:100%;
     margin-top: -39px;
   margin-bottom: -10px;
 }
+*/
+td{
+    text-align:left;
+}
 
 #left #bar{
-    height:100%;
-    width:90px;
+    margin-top: -20px;
+/*    height:px;*/
+    width:60px;
     margin-top:20px;
+}
+
+.small img{
+    width:60px;
+    height:100px;
+    margin-top:-10px
+/*
+    max-width: 100%;
+    height:auto;
+*/
+}
+
+.game{
+    margin:0;
+    padding:0;
 }
