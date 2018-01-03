@@ -18,7 +18,7 @@
             <h2>Game Rules</h2>
             <table>
                 <tr>
-                    <td><img src="images/arrows.png" alt="Arrows"></td>
+                    <td><img src="images/arrows3.png" alt="Arrows"></td>
                     <td>move player</td>
                 </tr>
                 <tr>
@@ -34,28 +34,19 @@
                     <td>avoid the bug</td>
                 </tr>
                 <tr>
-                    <td class="small"><img src="images/Rock.png" alt="Rock"></td>
-                    <td>obstacle</td>
-                </tr>
-                <tr>
                     <td class="small">
                         <img src="images/Heart.png" alt="Heart">
-                        <img src="images/Star.png" alt="Star">
-                        <img src="images/Key.png" alt="Key">
                     </td>
-                    <td>collect = 10 pts (each)</td>
+                    <td>Lives +1</td>
                 </tr>
                 <tr>
-                    <td class="small">
-                        <img src="images/Gem Blue.png" alt="Gem Blue">
-                        <img src="images/Gem Green.png" alt="Gem Green">
-                        <img src="images/Gem Orange.png" alt="Gem Orange">
-                    </td>
-                    <td>collect = 30 pts (each)</td>
+                    <td class="small"><img src="images/Star.png" alt="Selector"></td>
+                    <td>Slow time for 5 seconds</td>
                 </tr>
+                
                 <tr>
-                    <td class="small"><img src="images/Selector.png" alt="Selector"></td>
-                    <td>collect = 50 pts</td>
+                    <td class="small"><img id="bar" src="images/YellowBar.png" alt="Selector" ></td>
+                    <td>Time remaining on time slow</td>
                 </tr>
             </table>
         </aside>
@@ -66,20 +57,13 @@
                 <script src="js/app.js"></script>
                 <script src="js/engine.js"></script>
             </div>
+            <section>
             <div>Lives:<span id="lives">5</span></div>
             <div>Score:<span id="score">0</span></div>
             <div class="btnRound">
                 <a aria-hidden="true" class="fa fa-volume-up"></a>
             </div>
-            <div>
-                <select id="character-select">
-                  <option value="boy">Boy</option>
-                  <option value="catGirl">Cat Girl</option>
-                  <option value="hornGirl">Horn Girl</option>
-                  <option value="pinkGirl">Pink Girl</option>
-                  <option value="princess">Princess</option>
-                </select>
-            </div>
+            </section>
         </div>
         
         <aside id="right">

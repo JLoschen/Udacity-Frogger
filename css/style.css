@@ -44,6 +44,7 @@ body {
     width:30%;
     float:left;
     background:green;
+/*    display:inline-block;*/
 }
 
 .btnRound {
@@ -59,8 +60,7 @@ body {
     cursor:pointer;
 }
 
-
-
+/*player selection*/
 .crop {
     width:100px;
     height: 30%;
@@ -70,7 +70,7 @@ body {
     cursor:pointer;
 }
 
- img {
+ #players img {
   height: 100%;
   margin-top: -39px;
   margin-bottom: -10px;
@@ -83,4 +83,17 @@ body {
 
  .selected img{
     background:blue;
+}
+
+/*left aside*/
+#left img{
+    height:100%;
+    margin-top: -39px;
+  margin-bottom: -10px;
+}
+
+#left #bar{
+    height:100%;
+    width:90px;
+    margin-top:20px;
 }

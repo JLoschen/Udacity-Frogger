@@ -344,12 +344,6 @@ function updateSpeedModifier(modifier){
 }
 
 $(document).ready(function(){
-    $('#character-select').change(function(){
-        player.sprite =  spriteDictionary[$(this).val()];
-        
-        //unselect combobox so arrow keys don't changed selection
-        $(this).blur();
-    });
     
     speedSlider = $('#speed-slider');
     ouchSound.src = "sounds/ouch2.wav";
