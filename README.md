@@ -1,8 +1,27 @@
-frontend-nanodegree-arcade-game
-===============================
+# Udacity-Arcade Game Project
+This is a project I did for the Udacity [Front End Web developer nanodegree](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001). This game is loosely based on the arcade game [Frogger](https://en.wikipedia.org/wiki/Frogger) . Some concepts and strategies this project demonstrates are html5 canvas, object oriented javascript and some new ES6 features.
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+![Pic of game](/images/Game.png)
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
-# Udacity-Frogger
-Udacity Frogger game
+## How to Play
+* Use the arrow keys to navigate your character
+* Avoid the bugs moving from left to right across the screen
+* Move the character to the river at the top 10 times to win.
+* The player has 5 lives, losing 1 each time a they run into a bug.
+* If the player loses all 5 lives they lose.
+*  The player can gain a life by reaching a tile with a heart on it. 
+* The player can  slow time for 5 seconds by reaching a tile with a star on it.
+## Demo
+[Play](https://jloschen.github.io/Frogger/index.html)
+
+## How to Setup the Game
+1. [Download](https://github.com/JLoschen/Udacity-Frogger/archive/master.zip) or [Clone](https://github.com/JLoschen/Udacity-Frogger.git) the Repository.
+2. Double click the `index.html` file to view the project in your browser.
+
+## Resources I Used
+* https://www.youtube.com/watch?v=40Me1-yAtTc (sound tutorial)
+* https://freesound.org/people/Under7dude/sounds/163441/ (ouch sound)
+* https://freesound.org/people/InspectorJ/sounds/352101/ (splash sound)
+* https://www.myinstants.com/instant/mario-star-power/ (mario star sound)
+* https://www.youtube.com/watch?v=5-zYkMrmMO8 (make round button using font awesome icon)
+* https://github.com/ayannone/Nanodegree-Project-3-Arcade-Game/ (I took alot of inspiration from this person's implementation of the project, specifically the ideas of adding sound effects as well as showing the game rules and character selection on the sides)

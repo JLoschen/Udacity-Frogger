@@ -17,6 +17,10 @@ body {
     animation: barShrink 5s linear 0s 1;
 }
 
+#container{
+    display:flex;
+}
+
 @keyframes barShrink {
 	0% {
 		height: 700px;
@@ -26,9 +30,15 @@ body {
 	}
 }
 
+.new{
+/*    padding:0px;*/
+/*    margin:0px;*/
+    margin-top:-40px;
+    padding-top:-39px;
+}
+
 #left{
     float:left;
-    background:red;
 }
 
 #right{
@@ -37,6 +47,10 @@ body {
 
 #main{
     float:left;
+}
+
+canvas{
+    padding-top:-39px;
 }
 
 .score-board{
@@ -87,6 +101,8 @@ body {
     width:60px;
     height:60px;
 }
+
+/*.fa-volume-up{*/
 
 /*left aside*/
 /*

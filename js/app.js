@@ -362,6 +362,7 @@ $(document).ready(function(){
     
     //toggle music listener
     $('.btnRound').click(function(){
+        
         var element = $('.fa');//only font awesome btn is the sound toggle
         if(element.hasClass('fa-volume-off')){
             element.removeClass('fa-volume-off');
