@@ -31,8 +31,6 @@ body {
 }
 
 .new{
-/*    padding:0px;*/
-/*    margin:0px;*/
     margin-top:-40px;
     padding-top:-39px;
 }
@@ -41,7 +39,7 @@ body {
     float:left;
 }
 
-#right{
+#player-options{
     float:right;
 }
 
@@ -73,64 +71,77 @@ canvas{
 }
 
 /*player selection*/
-.crop {
+.oval {
     width:100px;
     height: 30%;
     overflow: hidden;
-    border-radius: 100%;
+/*    border-radius: 100%;*/
+    border-radius: 10%;
+    background:clear;
+    cursor:pointer;
+}
+
+#players td img {
+    width:100px;
+/*    height: 30%;*/
+    
+    overflow: hidden;
+/*    border-radius: 100%;*/
+    border-radius: 10%;
     background:clear;
     cursor:pointer;
 }
 
  #players img {
-  height: 100%;
-  margin-top: -39px;
-  margin-bottom: -10px;
+  height: 210%;
+  margin-top: -33px;
+/*  margin-bottom: -10px;*/
   float: left;
 }
 
-.crop:hover{
+/*
+.oval:hover{
     background:lightblue;
+}
+*/
+
+#players td img:hover{
+    background:lightblue;
+}
+
+#players td{
+    width:100px;
+    height: 80px;
+    overflow: hidden;
+/*    border-radius: 100%;*/
+    border-radius: 10%;
+    background:clear;
+    cursor:pointer;
 }
 
  .selected img{
     background:blue;
 }
 
-.arrows{
+#left .arrows{
     width:60px;
     height:60px;
 }
 
-/*.fa-volume-up{*/
-
-/*left aside*/
-/*
-#left img{
-    height:100%;
-    margin-top: -39px;
-  margin-bottom: -10px;
-}
-*/
 td{
     text-align:left;
 }
 
 #left #bar{
     margin-top: -20px;
-/*    height:px;*/
     width:60px;
     margin-top:20px;
 }
 
-.small img{
+#left td img{
     width:60px;
     height:100px;
-    margin-top:-10px
-/*
-    max-width: 100%;
-    height:auto;
-*/
+    margin-top:-10px;
 }
 
 .game{

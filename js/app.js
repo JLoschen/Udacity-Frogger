@@ -4,7 +4,6 @@ var upMovement = -1 * tileHeight;
 var leftMovement = -1 * tileWidth;
 var score = 0;
 var lives = 5;
-//var laneSpeed = [100, 125, 150, 175, 200, 225];
 var laneSpeed = [225, 200, 175, 150, 125, 100];
 var speedSlider;
 var ouchSound = new Audio();
@@ -316,8 +315,6 @@ class Star{
     }
 }
 
-
-
 class FallingStar{
     constructor(x,y){
         this.timeToFall = 4000;//in milliseconds so 4 seconds
@@ -344,7 +341,6 @@ function updateSpeedModifier(modifier){
 }
 
 $(document).ready(function(){
-    
     speedSlider = $('#speed-slider');
     ouchSound.src = "sounds/ouch2.wav";
     splashSound.src = "sounds/splash.wav";
@@ -375,10 +371,11 @@ $(document).ready(function(){
         }
     });
     
-    $(".crop").click(function(){
+    $("#players img").click(function(){
+        
         $(".selected").removeClass('selected');
         $(this).addClass('selected');
-        player.sprite = $(this).children("img").attr('src');
+        player.sprite = $(this)/*.children("img")*/.attr('src');
     });
     
 });
