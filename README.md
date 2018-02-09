@@ -6,9 +6,9 @@ This is a project I did for the Udacity [Front End Web developer nanodegree](htt
 ## How to Play
 * Use the arrow keys to navigate your character
 * Avoid the bugs moving from left to right across the screen
-* Move the character to the river at the top 10 times to win.
-* The player has 5 lives, losing 1 each time a they run into a bug.
-* If the player loses all 5 lives they lose.
+* Move the character to the river at the top 5 times to win.
+* The player has 3 lives, losing 1 each time a they run into a bug.
+* If the player loses all 3 lives they lose.
 *  The player can gain a life by reaching a tile with a heart on it. 
 * The player can  slow time for 5 seconds by reaching a tile with a star on it.
 ## Demo

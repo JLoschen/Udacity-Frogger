@@ -3,7 +3,7 @@ var tileWidth = 101;
 var upMovement = -1 * tileHeight;
 var leftMovement = -1 * tileWidth;
 var score = 0;
-var lives = 5;
+var lives = 3;
 var laneSpeed = [225, 200, 175, 150, 125, 100];
 var speedSlider;
 var ouchSound = new Audio();
@@ -237,10 +237,10 @@ class Player {
 function incrementScore(){
     score++;
     $('#score').html(score);
-    if(score === 10){
+    if(score === 5){
         swal({
 			title: 'You win!',
-			text: 'You got 10!',
+			text: 'You got 5!',
 			type: 'success',
 			confirmButtonText: 'Next Game'
 		},function(){
@@ -252,7 +252,7 @@ function incrementScore(){
 function setupNewGame(){
     score = 0;
     $('#score').html(score);
-    lives = 5;
+    lives = 3;
     $('#lives').html(lives);
     player.reset();
     allEnemies = [new Enemy(1), new Enemy(2), new Enemy(3), new Enemy(4), new Enemy(5), new Enemy(6)];
